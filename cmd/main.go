@@ -4,18 +4,20 @@ import (
 	"bdpit/bookstore-go/internals/routes"
 	"bdpit/bookstore-go/pkg"
 	"log"
+
+	_"github.com/jmoiron/sqlx"
 )
 
 // Dependency Injection (DI)
 
 func main()  {
 	// Inisialisasi DB
-	_, err := pkg.InitMySql()
+	db, err := pkg.InitMySql()
 	if err != nil {
 		log.Fatal(err)
 	}
 	// Inisialisasi Router
-	router := routes.InitRouter()
+	router := routes.InitRouter(db)
 
 	// Inisialisasi Server
 	server := pkg.InitServer(router)
